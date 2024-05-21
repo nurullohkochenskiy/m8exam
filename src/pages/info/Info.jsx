@@ -58,7 +58,7 @@ const Info = () => {
     <>
       <Header />
       <div className="info__container">
-        {/* <div className="left">
+        <div className="left">
           <div className="title">
             <span>
               <img
@@ -86,7 +86,7 @@ const Info = () => {
               </span>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="right"><ApexChart id={id} /></div>
       </div>
     </>
