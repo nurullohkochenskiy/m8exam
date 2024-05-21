@@ -64,7 +64,7 @@ const Info = () => {
               <img
                 width={200}
                 height={200}
-                src="https://s3-alpha-sig.figma.com/img/4dc4/c742/07812d9bfc937edc89b4fbe07965167e?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UEIkZWuYzOMqxmLnre3oOlAFjf9IkMglrPV6fr4Sp0mQ2afFOD2U~p-wu2HvQd6tFtY6TQ-lS0QQRmFmoKpRmlVobP5BU~xv1qckesM~SewMmrQdVWAfaKpYuQsxNKQA6r2egb8M-mJ-6qfsalYFrVmjCGAaSPTly8bYnllRhzsxN5M2qSZqbVC1qINCTkvJzNuiaPVLQqvVsHzD7yqUiISi2Rxv1SYr4ba8yG5IggPoVlIVSdVy4eNxMFfO4A5H4h1Q3ha~slaSrC6Jaor9g4C~pyFKjZON-urOUuElLF6YgsekA~5hTYy7zrpRo~vWSRj5gxXjpe6vx2AA0HUMtw__"
+                src={infoCrypto.image.large}
                 alt=""
               />
             </span>

@@ -2,13 +2,17 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCrypto } from "../../context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Carousel = () => {
+  const navigate = useNavigate();
   const carouselRef = useRef(null);
   const { cryptos } = useCrypto();
-
+  const handleNavigate = (id) => {
+    navigate(`/info/${id}`);
+  };
   useEffect(() => {
     const carousel = carouselRef.current;
     const items = carousel.querySelectorAll(".carousel-item");
@@ -56,7 +60,7 @@ const Carousel = () => {
             key={index}
             className="carousel-item w-[25%] shrink-0 flex justify-center items-center"
           >
-            <div className="wrapper">
+            <div onClick={()=>handleNavigate(crypto.id)} className="wrapper">
               <img
                 width={80}
                 height={80}
