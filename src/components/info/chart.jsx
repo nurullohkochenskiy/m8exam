@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
-import axios from 'axios';
+import axios from "axios";
 
-const ApexChart = ({id}) => {
+const ApexChart = ({ id }) => {
   const [series, setSeries] = useState([]);
   const [options, setOptions] = useState({
     chart: {
@@ -33,7 +33,7 @@ const ApexChart = ({id}) => {
     yaxis: {
       labels: {
         formatter: function (val) {
-          return val.toFixed(2); 
+          return val.toFixed(2);
         },
       },
       title: {
@@ -47,7 +47,7 @@ const ApexChart = ({id}) => {
       shared: false,
       y: {
         formatter: function (val) {
-          return val.toFixed(2); 
+          return val.toFixed(2);
         },
       },
     },
@@ -61,15 +61,14 @@ const ApexChart = ({id}) => {
         );
         const prices = response.data.prices;
 
-        
-        const formattedData = prices.map(price => ({
+        const formattedData = prices.map((price) => ({
           x: price[0],
-          y: price[1]
+          y: price[1],
         }));
 
-        setSeries([{ name: 'Price', data: formattedData }]);
+        setSeries([{ name: "Price", data: formattedData }]);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 

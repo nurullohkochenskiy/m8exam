@@ -114,7 +114,7 @@ const Prices = () => {
                         </span>{" "}
                         {crypto.price_change_percentage_24h > 0
                           ? "+" + crypto.price_change_percentage_24h.toFixed(2)
-                          : "-" + price_change_percentage_24h.toFixed(2)}
+                          : "-" +crypto.price_change_percentage_24h.toFixed(2)}
                         %
                       </div>
                     </div>
