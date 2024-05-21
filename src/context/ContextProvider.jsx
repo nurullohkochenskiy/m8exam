@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 const Cryptocontext = createContext();
