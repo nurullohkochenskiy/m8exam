@@ -36,7 +36,7 @@ export function ContextProvider({ children }) {
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=1`
       );
-      const prices = response.data.prices;
+      setPrices(response.data.prices);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -67,6 +67,8 @@ export function ContextProvider({ children }) {
         setCurrency,
         getInfo,
         infoCrypto,
+        getChart,
+        prices,
       }}
     >
       {children}

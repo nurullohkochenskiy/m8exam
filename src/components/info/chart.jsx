@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
-import axios from "axios";
+import { useCrypto } from "../../context/ContextProvider";
 
 const ApexChart = ({ id }) => {
+  const {getChart,prices } = useCrypto();
   const [series, setSeries] = useState([]);
   const [options, setOptions] = useState({
     chart: {
@@ -54,25 +55,13 @@ const ApexChart = ({ id }) => {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=1`
-        );
-        const prices = response.data.prices;
+    getChart(id)
+    const formattedData = prices.map((price) => ({
+      x: price[0],
+      y: price[1],
+    }));
 
-        const formattedData = prices.map((price) => ({
-          x: price[0],
-          y: price[1],
-        }));
-
-        setSeries([{ name: "Price", data: formattedData }]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    setSeries([{ name: "Price", data: formattedData }]);
   }, []);
 
   return (
