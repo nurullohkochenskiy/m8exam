@@ -1,0 +1,64 @@
+@import "variables";
+
+.header {
+  width: 100%;
+  height: 64px;
+  background-color: $bg-main;
+ 
+
+  display: flex;
+  justify-content: center;
+
+  .header__wrapper {
+    box-shadow: 0px 1px 10px 0px #0000001f;
+
+    box-shadow: 0px 4px 5px 0px #00000024;
+  
+    box-shadow: 0px 2px 4px -1px #00000033;
+    width: 100%;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .logo {
+      color: $text-main;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 32px;
+      letter-spacing: 0.15000000596046448px;
+      text-align: left;
+    }
+    .buttons {
+      display: flex;
+      align-items: center;
+
+      .switch {
+        color: $text-secondary;
+        .current {
+          display: flex;
+          cursor: pointer;
+          padding: 10px;
+        }
+        .options {
+          position: absolute;
+
+          div {
+            padding: 5px;
+            right: 0;
+            cursor: pointer;
+          }
+        }
+      }
+      .watchlistbtn {
+        background-color: $text-main;
+        border: none;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 24.5px;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    }
+  }
+}

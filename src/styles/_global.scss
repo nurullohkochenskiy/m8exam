@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&display=swap");
+@import "variables";
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.container {
+  max-width: 1280px !important;
+}
+body {
+  font-family: "Roboto", sans-serif;
+}
+.text__success {
+  color: $text-success;
+}
+.text__danger {
+  color: $text-danger;
+}
+.noinfo{
+  width: 100vw;
+  height: 100vh;
+  background-color: $bg-main;
+  color: $text-secondary;
+}
