@@ -4,7 +4,7 @@ import { useCrypto } from "../../context/ContextProvider";
 const PeriodSwitch = ({ id }) => {
   const { getChart } = useCrypto();
   const [period, setPeriod] = useState(1);
-  const [cooldown, setCooldown] = useState(0);
+  const [cooldown, setCooldown] = useState(10);
 
   const handlePeriodChange = (day) => {
     if (cooldown > 0) return; // Prevent button clicks during cooldown
