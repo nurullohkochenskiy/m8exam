@@ -3,27 +3,30 @@ import { useCrypto } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 
 const Prices = () => {
+  const { cryptos, getCryptos, watchlist, setWatchlist, currency } =
+    useCrypto();
+  console.log(cryptos);
+  //! Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 5;
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const records = cryptos.slice(firstIndex, lastIndex);
+  // const nPage = Math.ceil(cryptos.length / recordsPerPage);
+  // const numbers = [...Array(nPage + 1).keys()].slice(1);
+  //! Pagination end
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
   const pagePlus = () => {
-    if (page < 2) {
-      setPage(page + 1);
+    if (currentPage !== 2) {
+      setCurrentPage(currentPage + 1);
     }
   };
   const pageMinus = () => {
-    if (page > 1) {
-      setPage(page - 1);
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
-  const {
-    cryptos,
-    foundCryptos,
-    getCryptos,
-    watchlist,
-    setWatchlist,
-    currency,
-  } = useCrypto();
   const toggleWatch = (id) => {
     if (watchlist.includes(id)) {
       setWatchlist(watchlist.filter((item) => item !== id));
@@ -55,12 +58,12 @@ const Prices = () => {
       ).toLocaleString("en-US")}`;
     }
   };
-  const handleNavigate = (id)=>{
-    navigate(`/info/${id}`)
-  }
+  const handleNavigate = (id) => {
+    navigate(`/info/${id}`);
+  };
   useEffect(() => {
-    getCryptos(page);
-  }, [page]);
+    getCryptos();
+  }, []);
   return (
     <main className="prices__wrapper">
       <div className="container ">
@@ -77,11 +80,14 @@ const Prices = () => {
             <div className="cap">Market Cap</div>
           </div>
           <ul className="list">
-            {foundCryptos.map((crypto, i) => {
+            {records.map((crypto, i) => {
               return (
-                <li  key={i} className="list__item">
+                <li key={i} className="list__item">
                   <div className="skelet">
-                    <div onClick={()=>handleNavigate(crypto.id)} className="coin">
+                    <div
+                      onClick={() => handleNavigate(crypto.id)}
+                      className="coin"
+                    >
                       <img src={crypto.image} width={50} height={50} alt="" />
                       <div className="name">
                         <div className="short">
@@ -90,10 +96,13 @@ const Prices = () => {
                         <div className="full">{crypto.name}</div>
                       </div>
                     </div>
-                    <div onClick={()=>handleNavigate(crypto.id)} className="price">
+                    <div
+                      onClick={() => handleNavigate(crypto.id)}
+                      className="price"
+                    >
                       {currencyHandler(crypto.current_price)}
                     </div>
-                    <div  className="change">
+                    <div className="change">
                       <div>
                         <span onClick={() => toggleWatch(crypto.id)}>
                           {watchlist.includes(crypto.id) ? (
@@ -111,14 +120,25 @@ const Prices = () => {
                               alt=""
                             />
                           )}
-                        </span>{" "}
-                        {crypto.price_change_percentage_24h > 0
-                          ? "+" + crypto.price_change_percentage_24h.toFixed(2)
-                          : "-" +crypto.price_change_percentage_24h.toFixed(2)}
-                        %
+                        </span>
+                        {crypto.price_change_percentage_24h > 0 ? (
+                          <span className="digits success">
+                            {"+" +
+                              crypto.price_change_percentage_24h.toFixed(2) +
+                              "%"}
+                          </span>
+                        ) : (
+                          <span className="digits danger">
+                            {crypto.price_change_percentage_24h.toFixed(2) +
+                              "%"}
+                          </span>
+                        )}
                       </div>
                     </div>
-                    <div onClick={()=>handleNavigate(crypto.id)} className="cap">
+                    <div
+                      onClick={() => handleNavigate(crypto.id)}
+                      className="cap"
+                    >
                       {marketcapHandler(crypto.market_cap)}M
                     </div>
                   </div>
@@ -128,10 +148,16 @@ const Prices = () => {
           </ul>
           <div className="pagination">
             <div onClick={() => pageMinus()}>{"<"}</div>
-            <div className={page == 1 && "active"} onClick={() => setPage(1)}>
+            <div
+              className={currentPage == 1 ? "active": ''}
+              onClick={() => setCurrentPage(1)}
+            >
               1
             </div>
-            <div className={page == 2 && "active"} onClick={() => setPage(2)}>
+            <div
+              className={currentPage == 2 ? "active": ''}
+              onClick={() => setCurrentPage(2)}
+            >
               2
             </div>
             <div onClick={() => pagePlus()}>{">"}</div>

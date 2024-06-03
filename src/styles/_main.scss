@@ -100,18 +100,24 @@
               display: flex;
               align-items: center;
               justify-content: end;
+              display: flex;
               div {
                 width: 90px;
-                color: $text-success;
                 font-family: Roboto;
                 font-size: 14px;
                 font-weight: 500;
                 line-height: 20.02px;
                 letter-spacing: 0.15000000596046448px;
                 display: flex;
-              align-items: center;
-              justify-content: space-between;
+                align-items: center;
+                justify-content: space-between;
                 gap: 10px;
+              }
+              .success {
+                color: $text-success;
+              }
+              .danger {
+                color: $text-danger;
               }
             }
             .cap {

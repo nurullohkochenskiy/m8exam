@@ -33,6 +33,7 @@
       align-items: center;
 
       .switch {
+        z-index: 99;
         color: $text-secondary;
         .current {
           display: flex;

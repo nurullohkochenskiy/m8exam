@@ -1,66 +1,73 @@
-import axios from "axios";
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 
 const Cryptocontext = createContext();
-
 export function ContextProvider({ children }) {
+  const [chartLoading, setChartLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cryptos, setCryptos] = useState([]);
-  const [foundCryptos, setFoundCryptos] = useState([]);
   const [infoCrypto, setInfoCrypto] = useState({});
   const [watchlist, setWatchlist] = useState([]);
   const [currency, setCurrency] = useState("usd");
   const [prices, setPrices] = useState([]);
-  const getCryptos = async (page) => {
+  const getCryptos = async () => {
     setLoading(true);
-    const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=gecko_desc&per_page=5&page=${page}&sparkline=false&price_change_percentage=24h`
-    );
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h`,
+        { method: "GET", headers: { accept: "application/json" } }
+      );
+
+      const data = await response.json();
+      setCryptos(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
-    const data = await response.json();
-    setFoundCryptos(data);
-    setLoading(false);
   };
   const getInfo = async (id) => {
     setLoading(true);
-    const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${id}`
-    );
-    const data = await response.json();
-    setInfoCrypto(data);
-    setLoading(false);
-  };
-  const getChart = async (id) => {
+    setInfoCrypto({});
     try {
-      const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=1`
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${id}`,
+        { method: "GET", headers: { accept: "application/json" } }
       );
-      setPrices(response.data.prices);
+      const data = await response.json();
+      setInfoCrypto(data);
+      setLoading(false);
     } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-  useEffect(() => {
-    if (!cryptos.length > 0) {
-      setLoading(true);
-      fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h"
-      )
-        .then((response) => response.json())
-        .then((data) => setCryptos(data));
+      console.log(error);
+      setLoading(false);
+    } finally {
       setLoading(false);
     }
-    getCryptos(1);
-  }, []);
+  };
+  const getChart = async (id, day) => {
+    setChartLoading(true);
+    setPrices([]);
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${day}`,
+        { method: "GET", headers: { accept: "application/json" } }
+      );
+      const data = await response.json();
+      setPrices(data.prices);
+      setChartLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setChartLoading(false);
+    } finally {
+      setChartLoading(false);
+    }
+  };
 
   return (
     <Cryptocontext.Provider
       value={{
         loading,
         cryptos,
-        foundCryptos,
         getCryptos,
         setWatchlist,
         watchlist,
@@ -70,6 +77,7 @@ export function ContextProvider({ children }) {
         infoCrypto,
         getChart,
         prices,
+        chartLoading,
       }}
     >
       {children}

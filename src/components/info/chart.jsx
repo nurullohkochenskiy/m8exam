@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useCrypto } from "../../context/ContextProvider";
 
-const ApexChart = ({ id }) => {
-  const {getChart,prices } = useCrypto();
+const ApexChart = () => {
+  const { prices, chartLoading } = useCrypto();
   const [series, setSeries] = useState([]);
   const [options, setOptions] = useState({
     chart: {
       type: "area",
       stacked: false,
       height: 350,
+    },
+    stroke: {
+      curve: "straight",
     },
     dataLabels: {
       enabled: false,
@@ -26,9 +29,26 @@ const ApexChart = ({ id }) => {
       gradient: {
         shadeIntensity: 1,
         inverseColors: false,
-        opacityFrom: 0.5,
+        opacityFrom: 0,
         opacityTo: 0,
         stops: [0, 90, 100],
+      },
+    },
+    colors: ["#87CEEB"],
+    grid: {
+      borderColor: "#000",
+      yaxis: {
+        title: {
+          text: "",
+        },
+        lines: {
+          show: true,
+        },
+      },
+      xaxis: {
+        lines: {
+          show: true,
+        },
       },
     },
     yaxis: {
@@ -41,8 +61,25 @@ const ApexChart = ({ id }) => {
         text: "",
       },
     },
+
     xaxis: {
+      labels: {
+        rotate: -50,
+        rotateAlways: true,
+        datetimeUTC: true,
+        datetimeFormatter: {
+          year: "yyyy",
+          month: "MMM 'yy",
+          day: "dd MMM",
+          hour: "HH:mm",
+        },
+      },
+      offsetY: -13, //Change overflow
       type: "datetime",
+      axisBorder: {
+        show: true,
+        color: "#000",
+      },
     },
     tooltip: {
       shared: false,
@@ -52,17 +89,28 @@ const ApexChart = ({ id }) => {
         },
       },
     },
+    noData: {
+      text: chartLoading ? "Loading..." : "Loading... If graph does not appear, try again",
+      align: "center",
+      verticalAlign: "middle",
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: "#fff",
+        fontSize: "16px",
+        fontFamily: "Helvetica",
+      },
+    },
   });
 
   useEffect(() => {
-    getChart(id)
     const formattedData = prices.map((price) => ({
       x: price[0],
       y: price[1],
     }));
 
     setSeries([{ name: "Price", data: formattedData }]);
-  }, []);
+  }, [prices]);
 
   return (
     <div>
@@ -71,7 +119,7 @@ const ApexChart = ({ id }) => {
           options={options}
           series={series}
           type="area"
-          height={350}
+          height={650}
         />
       </div>
       <div id="html-dist"></div>

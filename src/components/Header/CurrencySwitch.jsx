@@ -14,7 +14,7 @@ const CurrencySwitch = () => {
   };
   const handleChangeCurrency = (id) => {
     setCurrency(id);
-    
+    setSwitcher("hidden");
   };
   return (
     <div className="switch">
