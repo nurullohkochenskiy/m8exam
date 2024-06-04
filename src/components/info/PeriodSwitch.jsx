@@ -25,7 +25,7 @@ const PeriodSwitch = ({ id }) => {
     <>
       {cooldown > 0 && (
         <div className="cooldown__msg">
-          <h1>On cooldown {cooldown} seconds!</h1>
+          <h1>Changing periods is on cooldown: {cooldown} seconds!</h1>
         </div>
       )}
       <div className="period__switch">

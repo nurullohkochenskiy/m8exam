@@ -56,7 +56,7 @@ export function ContextProvider({ children }) {
       setPrices(data.prices);
       setChartLoading(false);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.log("Error fetching data:", error);
       setChartLoading(false);
     } finally {
       setChartLoading(false);

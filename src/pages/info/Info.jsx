@@ -7,7 +7,7 @@ import PeriodSwitch from "../../components/info/PeriodSwitch";
 import Textinfo from "../../components/info/Textinfo";
 
 const Info = () => {
-  const { loading, getInfo, infoCrypto, getChart } = useCrypto();
+  const {  getInfo, infoCrypto, getChart } = useCrypto();
   const { id } = useParams();
 
   useEffect(() => {
@@ -15,36 +15,18 @@ const Info = () => {
       getInfo(id);
     }
     setTimeout(() => {
-      getChart(id,1);
+      getChart(id, 1);
     }, 1000);
   }, []);
-
-  if (loading) {
-    return (
-      <>
-        <Header />
-        <div className="noinfo">No information available yet</div>
-      </>
-    );
-  }
-
-  if (!infoCrypto || !infoCrypto.description) {
-    return (
-      <>
-        <Header />
-        <div className="noinfo">No information available</div>
-      </>
-    );
-  }
 
   return (
     <>
       <Header />
       <div className="info__container">
-        <Textinfo />
+        <Textinfo id = {id} />
         <div className="right">
           <ApexChart />
-          <PeriodSwitch id= {id} />
+          <PeriodSwitch id={id} />
         </div>
       </div>
     </>

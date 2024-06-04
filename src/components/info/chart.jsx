@@ -61,7 +61,6 @@ const ApexChart = () => {
         text: "",
       },
     },
-
     xaxis: {
       labels: {
         rotate: -50,
@@ -90,7 +89,7 @@ const ApexChart = () => {
       },
     },
     noData: {
-      text: chartLoading ? "Loading..." : "Loading... If graph does not appear, try again",
+      text: "Loading...",
       align: "center",
       verticalAlign: "middle",
       offsetX: 0,
@@ -111,6 +110,16 @@ const ApexChart = () => {
 
     setSeries([{ name: "Price", data: formattedData }]);
   }, [prices]);
+
+  useEffect(() => {
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      noData: {
+        ...prevOptions.noData,
+        text: chartLoading ? "Loading..." : "Failed to load resources, try again",
+      },
+    }));
+  }, [chartLoading]);
 
   return (
     <div>
