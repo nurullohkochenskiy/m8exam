@@ -8,7 +8,6 @@ const Watchlist = ({ sidebar, setSidebar }) => {
   const list = cryptos.filter((crypto) =>
     watchlist.some((id) => crypto.id == id)
   );
-  console.log(list);
   const toggleRemove = (id) => {
     setWatchlist(watchlist.filter((item) => item !== id));
   };

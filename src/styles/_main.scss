@@ -18,13 +18,14 @@
       width: 100%;
       margin-bottom: 20px;
       input {
+
         width: 100%;
         background-color: transparent;
         border: 1px solid #ffffff3b;
         border-radius: 4px;
         height: 61px;
         padding: 14px;
-        color: #ffffff3b;
+        color: $text-secondary;
       }
     }
     .list__wrapper {
