@@ -9,6 +9,7 @@ export function ContextProvider({ children }) {
   const [watchlist, setWatchlist] = useState([]);
   const [currency, setCurrency] = useState("usd");
   const [prices, setPrices] = useState([]);
+  const [error, setError] = useState("");
   const getCryptos = async () => {
     setLoading(true);
     try {
@@ -27,6 +28,7 @@ export function ContextProvider({ children }) {
     }
   };
   const getInfo = async (id) => {
+    setError("");
     setLoading(true);
     setInfoCrypto({});
     try {
@@ -34,34 +36,51 @@ export function ContextProvider({ children }) {
         `https://api.coingecko.com/api/v3/coins/${id}`,
         { method: "GET", headers: { accept: "application/json" } }
       );
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          setError("notfound");
+        }
+        setLoading(false);
+        return;
+      }
+
       const data = await response.json();
       setInfoCrypto(data);
       setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    } finally {
+    } catch (err) {
+      console.log("Error fetching info:", err);
       setLoading(false);
     }
   };
+
   const getChart = async (id, day) => {
     setChartLoading(true);
     setPrices([]);
+    setError("");
     try {
       const response = await fetch(
         `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${day}`,
         { method: "GET", headers: { accept: "application/json" } }
       );
+  
+      if (!response.ok) {
+        if (response.status === 404) {
+          setError("notfound");
+        }
+        setChartLoading(false);
+        return;
+      }
+  
       const data = await response.json();
       setPrices(data.prices);
       setChartLoading(false);
-    } catch (error) {
-      console.log("Error fetching data:", error);
-      setChartLoading(false);
-    } finally {
+    } catch (err) {
+      console.log("Error fetching data:", err);
       setChartLoading(false);
     }
   };
+  
 
   return (
     <Cryptocontext.Provider
@@ -78,6 +97,7 @@ export function ContextProvider({ children }) {
         getChart,
         prices,
         chartLoading,
+        error,
       }}
     >
       {children}

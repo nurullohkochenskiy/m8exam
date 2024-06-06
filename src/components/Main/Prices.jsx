@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useCrypto } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
+import eyeActive from '../../pictures/main/eye_active.png'
+import eyeNonActive from '../../pictures/main/eye_non_active.png'
 
 const Prices = () => {
   const { cryptos, getCryptos, watchlist, setWatchlist, currency } =
@@ -109,14 +111,14 @@ const Prices = () => {
                             <img
                               width={27}
                               height={28}
-                              src="https://s3-alpha-sig.figma.com/img/f831/a651/3bc0016347adedf4a37b1af68bcb397b?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gtOzWSyFvVAtv~vTNIKejTJ40aUPVFMHAxUGeIlISb6IeshGfUGz1ESq~7m6yy9Y1iExqBCX7FGMwlGJf32prsy-i9ixglx9cD9bIdIJDtX01jP8MjjtJNCos3s5uWRly6182hGCX6sbAqQnWzoyr89lLn3G6aCJbsvvU8ZAk~5yRX9tpL~vXu0cM2GiQRzstNPe6EXdvJfAPa0iWiffPnQHE8m3RKVjIy7DoZq5VwF83K7SWupd1zZRg8WmU5p-RUVanp3NzNZwAKUCjws4oPM-XHFsL4QrOInuES2-POY4QYDW3Oj~xBhlYoX36i7TwJhfeQw26j023ehkCKmYWQ__"
+                              src={eyeActive}
                               alt=""
                             />
                           ) : (
                             <img
                               width={27}
                               height={28}
-                              src="https://s3-alpha-sig.figma.com/img/30b6/e25e/625e6816726163de6abc34626dfe6f39?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=lH7OSa69B1WW79sHgRUgH24BIXwbysDhpTZnWQ0~RaRaiIUyetFx-H1iB7MNHJA7hWVvnBUODgk9LIzYdsOxIdDEWjEEGluOnsTF9YUEXKpzrCuj5GJnsIK1i2zvD2h6B9RxGrnLWWPZIfsrmoceXrzPAZQcoUjWirYhXDeiVf~x93Tu-P18p~Ld6Istp4SvfRxZp10lCdvV2obGSJ1YuPcqmBFVmKD0jYQuSZgvuc5RIOl6WdXLSIMSVCOXBOTA9qv88UWPIusQ8e5B53WhNC9xeKDNE39Ect5hIB~ryikjiEYJkl4I5HjHr8xMgCr5r9eEHZluRBATJvcF9mABAQ__"
+                              src={eyeNonActive}
                               alt=""
                             />
                           )}

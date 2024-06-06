@@ -9,9 +9,18 @@ gsap.registerPlugin(ScrollTrigger);
 const Carousel = () => {
   const navigate = useNavigate();
   const carouselRef = useRef(null);
-  const { cryptos } = useCrypto();
+  const { cryptos, currency } = useCrypto();
   const handleNavigate = (id) => {
     navigate(`/info/${id}`);
+  };
+  const currencyHandler = (amount) => {
+    if (currency == "usd") {
+      return `$ ${amount.toFixed(2)}`;
+    } else if (currency == "eur") {
+      return `€ ${(amount * 0.92).toFixed(2)}`;
+    } else if (currency == "rub") {
+      return `₽ ${(amount * 90.3).toFixed(2)}`;
+    }
   };
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -60,7 +69,7 @@ const Carousel = () => {
             key={index}
             className="carousel-item w-[25%] shrink-0 flex justify-center items-center"
           >
-            <div onClick={()=>handleNavigate(crypto.id)} className="wrapper">
+            <div onClick={() => handleNavigate(crypto.id)} className="wrapper">
               <img
                 width={80}
                 height={80}
@@ -70,15 +79,19 @@ const Carousel = () => {
               />
               <div className="item__name">
                 {crypto.symbol.toUpperCase()}{" "}
-                <span className="text__success">
-                  {" "}
-                  {crypto.price_change_percentage_24h > 0
-                    ? "+" + crypto.price_change_percentage_24h.toFixed(2)
-                    : "-" + crypto.price_change_percentage_24h.toFixed(2)}
-                  %
-                </span>
+                {crypto.price_change_percentage_24h > 0 ? (
+                  <span className="text__success">
+                    {"+" + crypto.price_change_percentage_24h.toFixed(2) + "%"}
+                  </span>
+                ) : (
+                  <span className="text__danger">
+                    {crypto.price_change_percentage_24h.toFixed(2) + "%"}
+                  </span>
+                )}
               </div>
-              <div className="price">$ {crypto.current_price}</div>
+              <div className="price">
+                {currencyHandler(crypto.current_price)}
+              </div>
             </div>
           </div>
         ))}

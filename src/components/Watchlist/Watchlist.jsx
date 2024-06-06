@@ -3,11 +3,12 @@ import { useCrypto } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 const Watchlist = ({ sidebar, setSidebar }) => {
     const navigate = useNavigate();
-  const { cryptos, watchlist, setWatchlist, currency, setCurrency } =
+  const { cryptos, watchlist, setWatchlist, currency } =
     useCrypto();
   const list = cryptos.filter((crypto) =>
     watchlist.some((id) => crypto.id == id)
   );
+  console.log(list);
   const toggleRemove = (id) => {
     setWatchlist(watchlist.filter((item) => item !== id));
   };
@@ -37,10 +38,10 @@ const Watchlist = ({ sidebar, setSidebar }) => {
         {list.map((item) => {
           return (
             <div  class="grid__item">
-              <span onClick={()=>handleNavigate(crypto.id)} className="icon">
+              <span onClick={()=>handleNavigate(item.id)} className="icon">
                 <img width={118} height={118} src={item.image} alt="" />
               </span>
-              <div onClick={()=>handleNavigate(crypto.id)} className="price">{currencyHandler(item.current_price)}</div>
+              <div onClick={()=>handleNavigate(item.id)} className="price">{currencyHandler(item.current_price)}</div>
               <button
                 onClick={() => toggleRemove(item.id)}
                 className="remove__btn"

@@ -1,8 +1,12 @@
 import React from "react";
+import backgroundImage from '../../pictures/carousel/backpic.jpg'
 
 const Carouselbg = ({ children }) => {
+  const style = {
+    backgroundImage: `url(${backgroundImage})`,
+  };
   return (
-    <div className="carousel__wrapper">
+    <div style={style} className="carousel__wrapper">
       <div className="container">
         <div className="maintext">
           <div className="intro">CRYPTOFOLIO WATCH LIST</div>
